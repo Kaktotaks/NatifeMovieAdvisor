@@ -28,6 +28,7 @@
 		E4828356296EF3F600FE76CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828355296EF3F600FE76CD /* Constants.swift */; };
 		E4828358296EF41E00FE76CD /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828357296EF41E00FE76CD /* StringExtension.swift */; };
 		E482835A296EFA6E00FE76CD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828359296EFA6E00FE76CD /* GradientView.swift */; };
+		E482835E29707ABE00FE76CD /* LoaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482835D29707ABE00FE76CD /* LoaderFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		E4828355296EF3F600FE76CD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E4828357296EF41E00FE76CD /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E4828359296EFA6E00FE76CD /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E482835D29707ABE00FE76CD /* LoaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				E4828338296DA3B300FE76CD /* ActivityIndicatorView.swift */,
 				E4828352296EF39000FE76CD /* MyAlertManager.swift */,
 				E4828359296EFA6E00FE76CD /* GradientView.swift */,
+				E482835D29707ABE00FE76CD /* LoaderFooterView.swift */,
 			);
 			path = UIManagers;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4828316296D92E300FE76CD /* MoviesListViewController.swift in Sources */,
+				E482835E29707ABE00FE76CD /* LoaderFooterView.swift in Sources */,
 				E4828337296DA38000FE76CD /* RestService.swift in Sources */,
 				E482835A296EFA6E00FE76CD /* GradientView.swift in Sources */,
 				E482834D296DFD1C00FE76CD /* PopMoviesEntryPoint.swift in Sources */,
