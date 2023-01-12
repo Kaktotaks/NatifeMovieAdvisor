@@ -15,6 +15,11 @@ enum APIConstants {
 
     static let pageLimit = 20
 
+    static var currentLanguage: String? = "en"
+    static var currentRegion: String? = "us"
+    static var currentYear: String? = "2022"
+    static var currentPage = 1
+
     enum EndPoints: String {
         case popMoviesEndPoint = "movie/popular?"
         case searchMoviesEndPoint = "search/movie?"
@@ -35,7 +40,6 @@ enum APIConstants {
 }
 
 class RestService {
-    public var isPaginating = false
     public var totalRezults = 0
 
     static let shared: RestService = .init()
@@ -72,7 +76,6 @@ class RestService {
 
     // MARK: - Getting all popMovies Searching for movies
     func getAllPopMovies(
-        pagination: Bool = false,
         language: String? = "en",
         region: String? = "us",
         year: String? = "2022",
@@ -102,10 +105,6 @@ class RestService {
 
         debugPrint(path)
 
-        if pagination {
-            isPaginating = true
-        }
-
         getJsonResponse(path, endPoint: endPoint) { [weak self] response in
             guard let self = self else { return }
 
@@ -115,13 +114,11 @@ class RestService {
                     if let data = try? decoder.decode(PopMoviesEntryPoint.self, from: response.data ?? Data()) {
                         let movies = data.results ?? []
                         completionHandler(.success(movies))
-                        debugPrint("Movies now count: \(movies.count) 👀")
+                        self.totalRezults = data.totalResults ?? 0
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))
             }
-
-            self.isPaginating = false
         }
     }
 }
