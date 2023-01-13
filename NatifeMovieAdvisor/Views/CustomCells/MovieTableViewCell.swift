@@ -28,7 +28,6 @@ class MovieTableViewCell: UITableViewCell {
         value.startColor = .black
         value.endColor = .clear
         value.clipsToBounds = true
-//        value.translatesAutoresizingMaskIntoConstraints = false
         return value
     }()
 
@@ -68,6 +67,7 @@ class MovieTableViewCell: UITableViewCell {
         value.textAlignment = .center
         value.text = Constants.noData
         value.textColor = .white
+        value.numberOfLines = 0
         return value
     }()
 
@@ -78,17 +78,33 @@ class MovieTableViewCell: UITableViewCell {
         setUpUI()
     }
 
-    func configure(with popMovieModel: PopMoviesResponse) {
-        if let posterURL = popMovieModel.posterPath {
+    // MARK: - Func configure with viewModel (API model / CoreData Model)
+    func configure(_ viewModel: MovieTableViewCellViewModel) {
+        if let posterURL = viewModel.posterPath {
             let moviePosterImageURL = URL(string: APIConstants.imageBaseURL + posterURL)
             posterImageView.kf.indicatorType = .activity
             posterImageView.kf.setImage(with: moviePosterImageURL)
         }
 
-        movieTitleLabel.text = popMovieModel.title
-        voteAverageLabel.text = "⭐️ \(popMovieModel.voteAverage ?? 0)"
-        releaseDateLabel.text = "🗓️ \(popMovieModel.releaseDate ?? Constants.noData)"
-        genresLabel.text = "🎭 \(popMovieModel.genreIds ?? [Int]())"
+        movieTitleLabel.text = viewModel.movieTitle
+        voteAverageLabel.text = "⭐️ \(viewModel.voteAverage ?? 0)"
+        releaseDateLabel.text = "🗓️ \(viewModel.releaseDate ?? Constants.noData)"
+        genresLabel.text = "🎭 \(configureGenres(viewModel).minimalDescription)"
+    }
+
+    private func configureGenres(_ viewModel: MovieTableViewCellViewModel) -> [String] {
+        var apiGenreNames: [String] = []
+        let genresList = GenresModel.GenresList
+
+        for list in genresList {
+            for response in viewModel.genreIds ?? [Int]() {
+                if response == list.id {
+                    apiGenreNames.append(list.name ?? "")
+                }
+            }
+        }
+
+        return apiGenreNames.map { $0.localized() }
     }
 }
 
@@ -132,7 +148,7 @@ extension MovieTableViewCell {
         genresLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(releaseDateLabel.snp.bottom).offset(16)
-            $0.height.equalTo(20)
+            $0.bottom.equalToSuperview()
         }
     }
 }
