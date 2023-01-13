@@ -76,12 +76,12 @@ class RestService {
 
     // MARK: - Getting all popMovies Searching for movies
     func getAllPopMovies(
-        language: String? = "en",
-        region: String? = "us",
-        year: String? = "2022",
-        query: String? = nil,
-        page: Int = 1,
-        completionHandler: @escaping(Result<[PopMoviesResponse], Error>) -> Void
+        language: String?,
+        region: String?,
+        year: String?,
+        query: String?,
+        page: Int,
+        completionHandler: @escaping(Result<[PopMoviesResponseModel], Error>) -> Void
     ) {
         var endPoint = APIConstants.EndPoints.popMoviesEndPoint
         var path = "&page=\(page)"
@@ -111,7 +111,7 @@ class RestService {
             switch response.result {
                 case .success:
                     let decoder = JSONDecoder()
-                    if let data = try? decoder.decode(PopMoviesEntryPoint.self, from: response.data ?? Data()) {
+                    if let data = try? decoder.decode(PopMoviesEntryPointModel.self, from: response.data ?? Data()) {
                         let movies = data.results ?? []
                         completionHandler(.success(movies))
                         self.totalRezults = data.totalResults ?? 0

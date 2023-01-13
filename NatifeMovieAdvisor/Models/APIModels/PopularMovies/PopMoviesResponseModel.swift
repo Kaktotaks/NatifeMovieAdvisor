@@ -1,6 +1,6 @@
 import Foundation
 
-struct PopMoviesResponse: Codable {
+struct PopMoviesResponseModel: Codable {
 	let adult: Bool?
 	let backdropPath: String?
 	let genreIds: [Int]?

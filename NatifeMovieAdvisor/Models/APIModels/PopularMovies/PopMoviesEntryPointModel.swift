@@ -1,8 +1,8 @@
 import Foundation
 
-struct PopMoviesEntryPoint: Codable {
+struct PopMoviesEntryPointModel: Codable {
 	let page: Int?
-	let results: [PopMoviesResponse]?
+	let results: [PopMoviesResponseModel]?
 	let totalPages: Int?
 	let totalResults: Int?
 
@@ -16,7 +16,7 @@ struct PopMoviesEntryPoint: Codable {
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		page = try values.decodeIfPresent(Int.self, forKey: .page)
-		results = try values.decodeIfPresent([PopMoviesResponse].self, forKey: .results)
+		results = try values.decodeIfPresent([PopMoviesResponseModel].self, forKey: .results)
 		totalPages = try values.decodeIfPresent(Int.self, forKey: .totalPages)
 		totalResults = try values.decodeIfPresent(Int.self, forKey: .totalResults)
 	}

@@ -28,7 +28,17 @@ class MoviesListViewController: UIViewController {
         return value
     }()
 
-    private var moviesModel: [PopMoviesResponse] = []
+    private var moviesModel: [PopMoviesResponseModel] = []
+    
+    // MARK: - Setup UISearchController
+    private let searchController = UISearchController(searchResultsController: SearchMoviesViewController())
+    private var isSearchBarEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+            return text.isEmpty
+    }
+    private var isFiltering: Bool {
+        searchController.isActive && !isSearchBarEmpty
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +46,7 @@ class MoviesListViewController: UIViewController {
         setupUI()
         setUpTableView()
         getAllPopMovies()
+        setUpSearchController()
     }
 
     // MARK: - Methods
@@ -82,11 +93,22 @@ class MoviesListViewController: UIViewController {
 
     @objc private func upButtonPressed() {
         let topRow = IndexPath(row: 0, section: 0)
-        
+
         moviesTableView.scrollToRow(at: topRow,
                                    at: .top,
                                    animated: true
         )
+    }
+
+    // Setup UISearchController method
+    private func setUpSearchController() {
+        let searchMoviesVC = SearchMoviesViewController()
+        let searchController = UISearchController(searchResultsController: searchMoviesVC)
+        searchController.searchResultsUpdater = searchMoviesVC
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = Constants.searchMoviesPlaceholder
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 }
 
@@ -105,9 +127,8 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
 
-        //            cell.configure(with: ArticlesCustomTableViewCellViewModel(with: articlesModel[indexPath.row]))
         let movie = moviesModel[indexPath.row]
-        cell.configure(with: movie)
+        cell.configure(MovieTableViewCellViewModel(with: movie))
         cell.selectionStyle = .none
         return cell
     }
