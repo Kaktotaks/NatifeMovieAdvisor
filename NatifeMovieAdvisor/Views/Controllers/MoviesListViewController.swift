@@ -29,7 +29,7 @@ class MoviesListViewController: UIViewController {
     }()
 
     private var moviesModel: [PopMoviesResponseModel] = []
-    
+
     // MARK: - Setup UISearchController
     private let searchController = UISearchController(searchResultsController: SearchMoviesViewController())
     private var isSearchBarEmpty: Bool {
@@ -51,7 +51,7 @@ class MoviesListViewController: UIViewController {
 
     // MARK: - Methods
     private func getAllPopMovies(
-        showActivityIndicator: Bool = false,
+        showActivityIndicator: Bool = true,
         language: String? = APIConstants.currentLanguage,
         region: String? = APIConstants.currentRegion,
         year: String? = APIConstants.currentYear,
@@ -165,6 +165,36 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         upButtonAppearance(scrollView, upButton: upButton)
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if
+//            let stringURL = filteredArticles[indexPath.row].url,
+//            let artilleURL = URL(string: stringURL) {
+//
+//            let articleTitle = filteredArticles[indexPath.row].title
+//            let webVC = WebViewViewController(url: artilleURL, title: articleTitle)
+//            let navVC = UINavigationController(rootViewController: webVC)
+//            self.present(navVC, animated: true)
+//        } else {
+//            print("No url was found")
+//            let noURLalert = MyAlertManager.shared.presentTemporaryInfoAlert(
+//                title: Constants.TemporaryAlertAnswers.NoURLArticle,
+//                message: nil, preferredStyle: .actionSheet,
+//                forTime: 1.0
+//            )
+//
+//            self.present(noURLalert, animated: true)
+//            return
+//        }
+
+        let movieID = moviesModel[indexPath.row].id
+        let movieDetailVC = MovieDetailsViewController(movieID: movieID)
+
+        let navVC = UINavigationController(rootViewController: movieDetailVC)
+        navVC.modalPresentationStyle = .fullScreen
+        navVC.modalTransitionStyle = .flipHorizontal
+        self.present(navVC, animated: true)
     }
 }
 

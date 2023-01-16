@@ -8,30 +8,25 @@
 import Foundation
 
 struct GenresModel {
-    static var GenresList: [GenreModel] = [
-        GenreModel(name: "Action", id: 28),
-        GenreModel(name: "Adventure", id: 12),
-        GenreModel(name: "Animation", id: 16),
-        GenreModel(name: "Comedy", id: 35),
-        GenreModel(name: "Crime", id: 80),
-        GenreModel(name: "Documentary", id: 99),
-        GenreModel(name: "Drama", id: 18),
-        GenreModel(name: "Family", id: 10751),
-        GenreModel(name: "Fantasy", id: 14),
-        GenreModel(name: "History", id: 36),
-        GenreModel(name: "Horror", id: 27),
-        GenreModel(name: "Music", id: 10402),
-        GenreModel(name: "Mystery", id: 9648),
-        GenreModel(name: "Romance", id: 10749),
-        GenreModel(name: "Science Fiction", id: 878),
-        GenreModel(name: "TV Movie", id: 10770),
-        GenreModel(name: "Thriller", id: 53),
-        GenreModel(name: "War", id: 10752),
-        GenreModel(name: "Western", id: 37)
+    static var GenresList: [Genres] = [
+        Genres(id: 28, name: "Action"),
+        Genres(id: 12, name: "Adventure"),
+        Genres(id: 16, name: "Animation"),
+        Genres(id: 35, name: "Comedy"),
+        Genres(id: 80, name: "Crime"),
+        Genres(id: 99, name: "Documentary"),
+        Genres(id: 18, name: "Drama"),
+        Genres(id: 10751, name: "Family"),
+        Genres(id: 14, name: "Fantasy"),
+        Genres(id: 36, name: "History"),
+        Genres(id: 27, name: "Horror"),
+        Genres(id: 10402, name: "Music"),
+        Genres(id: 9648, name: "Mystery"),
+        Genres(id: 10749, name: "Romance"),
+        Genres(id: 878, name: "Science Fiction"),
+        Genres(id: 10770, name: "TV Movie"),
+        Genres(id: 53, name: "Thriller"),
+        Genres(id: 10752, name: "War"),
+        Genres(id: 37, name: "Western")
     ]
-}
-
-struct GenreModel {
-    let name: String?
-    var id: Int?
 }
