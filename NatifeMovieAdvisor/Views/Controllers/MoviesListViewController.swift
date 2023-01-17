@@ -8,25 +8,21 @@
 import UIKit
 import SnapKit
 
-class MoviesListViewController: UIViewController {
+class MoviesListViewController: BaseViewController {
     // MARK: - Constants & Variables
-    private lazy var moviesTableView: UITableView = {
-        let value: UITableView = .init()
-        value.separatorStyle = .none
-        return value
-    }()
+    private lazy var moviesTableView: UITableView = build {
+        $0.separatorStyle = .none
+    }
 
-    private lazy var upButton: UIButton = {
-        let value: UIButton = .init()
-        value.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        value.tintColor = .label
-        value.contentMode = .scaleAspectFit
-        value.clipsToBounds = true
-        value.layer.cornerRadius = 20
-        value.addTarget(self, action: #selector(upButtonPressed), for: .touchUpInside)
-        value.backgroundColor = .systemGray3.withAlphaComponent(0.7)
-        return value
-    }()
+    private lazy var upButton: UIButton = build {
+        $0.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+        $0.tintColor = .label
+        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 20
+        $0.addTarget(self, action: #selector(upButtonPressed), for: .touchUpInside)
+        $0.backgroundColor = .systemGray3.withAlphaComponent(0.7)
+    }
 
     private var moviesModel: [PopMoviesResponseModel] = []
 
@@ -47,6 +43,7 @@ class MoviesListViewController: UIViewController {
         setUpTableView()
         getAllPopMovies()
         setUpSearchController()
+        setUpRefreshControl()
     }
 
     // MARK: - Methods
@@ -85,6 +82,32 @@ class MoviesListViewController: UIViewController {
         }
     }
 
+    private func setUpRefreshControl() {
+        moviesTableView.refreshControl = UIRefreshControl()
+        moviesTableView.refreshControl?.addTarget(
+            self,
+            action: #selector(didPullRefresh),
+            for: .valueChanged
+        )
+    }
+
+    @objc private func didPullRefresh() {
+        self.moviesTableView.refreshControl?.beginRefreshing()
+        self.moviesModel.removeAll()
+        APIConstants.currentPage = 1
+
+        self.getAllPopMovies(
+            showActivityIndicator: false,
+            language: APIConstants.currentLanguage,
+            region: APIConstants.currentRegion,
+            year: APIConstants.currentYear,
+            query: nil,
+            page: APIConstants.currentPage
+        )
+
+        self.moviesTableView.refreshControl?.endRefreshing()
+    }
+
     private func setUpTableView() {
         moviesTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         moviesTableView.delegate = self
@@ -100,7 +123,6 @@ class MoviesListViewController: UIViewController {
         )
     }
 
-    // Setup UISearchController method
     private func setUpSearchController() {
         let searchMoviesVC = SearchMoviesViewController()
         let searchController = UISearchController(searchResultsController: searchMoviesVC)
@@ -119,18 +141,7 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MovieTableViewCell.identifier
-            ) as? MovieTableViewCell
-        else {
-            return UITableViewCell()
-        }
-
-        let movie = moviesModel[indexPath.row]
-        cell.configure(MovieTableViewCellViewModel(with: movie))
-        cell.selectionStyle = .none
-        return cell
+        configurePopMovieCellForItem(models: moviesModel, tableView: tableView, indexPath: indexPath)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -168,33 +179,7 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if
-//            let stringURL = filteredArticles[indexPath.row].url,
-//            let artilleURL = URL(string: stringURL) {
-//
-//            let articleTitle = filteredArticles[indexPath.row].title
-//            let webVC = WebViewViewController(url: artilleURL, title: articleTitle)
-//            let navVC = UINavigationController(rootViewController: webVC)
-//            self.present(navVC, animated: true)
-//        } else {
-//            print("No url was found")
-//            let noURLalert = MyAlertManager.shared.presentTemporaryInfoAlert(
-//                title: Constants.TemporaryAlertAnswers.NoURLArticle,
-//                message: nil, preferredStyle: .actionSheet,
-//                forTime: 1.0
-//            )
-//
-//            self.present(noURLalert, animated: true)
-//            return
-//        }
-
-        let movieID = moviesModel[indexPath.row].id
-        let movieDetailVC = MovieDetailsViewController(movieID: movieID)
-
-        let navVC = UINavigationController(rootViewController: movieDetailVC)
-        navVC.modalPresentationStyle = .fullScreen
-        navVC.modalTransitionStyle = .flipHorizontal
-        self.present(navVC, animated: true)
+        presentMovieDetailVC(models: moviesModel, indexPath: indexPath)
     }
 }
 

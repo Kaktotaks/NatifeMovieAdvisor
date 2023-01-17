@@ -10,6 +10,7 @@ import Kingfisher
 import YouTubeiOSPlayerHelper
 
 class MovieDetailsViewController: UIViewController {
+    // MARK: - Constants and Variables
     private lazy var scrollView: UIScrollView = build {
         $0.backgroundColor = .clear
     }
@@ -27,52 +28,46 @@ class MovieDetailsViewController: UIViewController {
 
     private lazy var gradientView: GradientView = build {
         $0.verticalMode = true
-        $0.startColor = .black
+        $0.startColor = .systemBackground
         $0.endColor = .clear
     }
 
     private lazy var titleLabel: UILabel = build {
         $0.numberOfLines = 0
         $0.font = Constants.Fonts.bigSemiBoldFont
-        $0.textColor = .white
         $0.shadowColor = .lightGray
         $0.shadowOffset = CGSize(width: -1, height: 2)
     }
 
     private lazy var countryLabel: UILabel = build {
         $0.font = Constants.Fonts.mediumSemiBoldFont
-        $0.textColor = .white
     }
 
     private lazy var releaseDateLabel: UILabel = build {
         $0.font = Constants.Fonts.mediumSemiBoldFont
-        $0.textColor = .white
     }
 
     private lazy var genresLabel: UILabel = build {
         $0.font = Constants.Fonts.mediumSemiBoldFont
-        $0.textColor = .white
         $0.numberOfLines = 0
     }
 
     private lazy var voteAverageLabel: UILabel = build {
         $0.font = Constants.Fonts.mediumSemiBoldFont
-        $0.textColor = .white
     }
 
     private lazy var overviewLabel: UILabel = build {
         $0.font = Constants.Fonts.smallRegularFont
         $0.textAlignment = .center
-        $0.textColor = .white
         $0.numberOfLines = 0
     }
 
     private lazy var videoPlayerView: YTPlayerView = build {
-        $0.backgroundColor = .green
+        $0.backgroundColor = .clear
     }
 
     private var movieID: Int?
-//    private var gotVideo: Bool?
+//    private var gotVideo = RestService.shared.gotVideo
 
     init(movieID: Int?) {
         self.movieID = movieID
@@ -86,14 +81,15 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        requestVideos()
         configureNavigationBarItems()
         getMovieDetail()
-        requestVideos()
         configureSubviews()
         configureConstraints()
+        addGesture()
     }
 
-    // MARK: - API requests
+    // MARK: - Methods
     private func getMovieDetail() {
         guard let movieID = movieID else { return }
 
@@ -107,7 +103,6 @@ class MovieDetailsViewController: UIViewController {
 
             switch result {
                 case .success(let movie):
-//                    self.movieModel = movie
                     self.configureContent(movieModel: movie)
                     DispatchQueue.main.async {
                         ActivityIndicatorView.shared.hide()
@@ -119,7 +114,7 @@ class MovieDetailsViewController: UIViewController {
         }
     }
 
-    func requestVideos() {
+    private func requestVideos() {
         guard let movieID = movieID else { return }
 
         RestService.shared.getMovieVideos(
@@ -128,11 +123,7 @@ class MovieDetailsViewController: UIViewController {
                     case .success(let videos):
                         guard let videoId = videos.first?.key else { return }
 
-//                        if !videoId.isEmpty {
-                            self.videoPlayerView.load(withVideoId: videoId)
-//                        } else {
-//                            self.gotVideo = false
-//                        }
+                        self.videoPlayerView.load(withVideoId: videoId)
                     case .failure(let error):
                         MyAlertManager.shared.showErrorAlert(error.localizedDescription, controller: self)
                 }
@@ -146,17 +137,21 @@ class MovieDetailsViewController: UIViewController {
             posterImageView.kf.setImage(with: moviePosterImageURL)
         }
 
+        if let avarage = movieModel?.voteAverage {
+            let roundedAvarage = Double(round(10 * avarage) / 10)
+            voteAverageLabel.text = "⭐️: \(roundedAvarage)"
+        }
+
         titleLabel.text = movieModel?.title
-        countryLabel.text = "🌏: \(movieModel?.productionCountries?.first?.iso31661 ?? "")"
+        countryLabel.text = "🌏: \(movieModel?.productionCountries?.first?.name ?? "")"
         releaseDateLabel.text = "🗓️: \(movieModel?.releaseDate ?? "")"
         genresLabel.text = "🎭: \(configureGenres(movieModel).minimalDescription)"
-        voteAverageLabel.text = "⭐️: \(movieModel?.voteAverage ?? 0)"
         overviewLabel.text = movieModel?.overview
     }
 
     private func configureGenres(_ movieModel: MovieDetailsModel?) -> [String] {
         var apiGenreNames: [String] = []
-        let genres = movieModel?.genres ?? [Genres]()
+        let genres = movieModel?.genres ?? [GenresModel]()
 
         for genre in genres {
             apiGenreNames.append(genre.name ?? "")
@@ -167,6 +162,27 @@ class MovieDetailsViewController: UIViewController {
 
     @objc private func didTapBackButton() {
         self.dismiss(animated: true)
+    }
+
+    private func addGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(gestureFired(_:)))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+
+        posterImageView.addGestureRecognizer(tapGesture)
+        posterImageView.isUserInteractionEnabled = true
+    }
+
+    @objc private func gestureFired(_ gesture: UITapGestureRecognizer) {
+        let imageVC = ImageViewController(movieImage: posterImageView)
+        let navVC = UINavigationController(rootViewController: imageVC)
+
+        if let sheet = navVC.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 20
+        }
+        self.present(navVC, animated: true)
     }
 }
 
@@ -182,7 +198,7 @@ extension MovieDetailsViewController {
     }
 
     private func configureSubviews() {
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
         posterImageView.addSubview(gradientView)
@@ -194,18 +210,19 @@ extension MovieDetailsViewController {
             releaseDateLabel,
             voteAverageLabel,
             genresLabel,
-            overviewLabel
+            overviewLabel,
+            videoPlayerView
         ].forEach { contentStackView.addArrangedSubview($0) }
         contentStackView.setCustomSpacing(4, after: posterImageView)
         contentStackView.setCustomSpacing(10, after: titleLabel)
         contentStackView.setCustomSpacing(10, after: countryLabel)
         contentStackView.setCustomSpacing(10, after: releaseDateLabel)
         contentStackView.setCustomSpacing(10, after: voteAverageLabel)
-        contentStackView.setCustomSpacing(10, after: genresLabel)
-        contentStackView.setCustomSpacing(10, after: overviewLabel)
+        contentStackView.setCustomSpacing(14, after: genresLabel)
+        contentStackView.setCustomSpacing(14, after: overviewLabel)
 
 //        if gotVideo == true {
-            contentStackView.addArrangedSubview(videoPlayerView)
+//            contentStackView.addArrangedSubview(videoPlayerView)
 //        }
     }
 

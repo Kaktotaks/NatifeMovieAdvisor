@@ -7,14 +7,12 @@
 
 import UIKit
 
-class SearchMoviesViewController: UIViewController, UISearchResultsUpdating {
+class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
     // MARK: - Constants and Variables
-    private let filteredMoviesTableView: UITableView = {
-        let value = UITableView()
-        value.translatesAutoresizingMaskIntoConstraints = false
-        value.separatorStyle = .none
-        return value
-    }()
+    private let filteredMoviesTableView: UITableView = build {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorStyle = .none
+    }
 
     private var filteredMovies: [PopMoviesResponseModel] = []
 
@@ -67,42 +65,14 @@ extension SearchMoviesViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MovieTableViewCell.identifier
-            ) as? MovieTableViewCell
-        else {
-            return UITableViewCell()
-        }
-
-        cell.configure(MovieTableViewCellViewModel(with: filteredMovies[indexPath.row]))
-        cell.selectionStyle = .none
-        return cell
+        configurePopMovieCellForItem(models: filteredMovies, tableView: tableView, indexPath: indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.movieTableViewHeight
     }
 
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        if
-    //            let stringURL = filteredArticles[indexPath.row].url,
-    //            let artilleURL = URL(string: stringURL) {
-    //
-    //            let articleTitle = filteredArticles[indexPath.row].title
-    //            let webVC = WebViewViewController(url: artilleURL, title: articleTitle)
-    //            let navVC = UINavigationController(rootViewController: webVC)
-    //            self.present(navVC, animated: true)
-    //        } else {
-    //            print("No url was found")
-    //            let noURLalert = MyAlertManager.shared.presentTemporaryInfoAlert(
-    //                title: Constants.TemporaryAlertAnswers.NoURLArticle,
-    //                message: nil, preferredStyle: .actionSheet,
-    //                forTime: 1.0
-    //            )
-    //
-    //            self.present(noURLalert, animated: true)
-    //            return
-    //        }
-    //    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presentMovieDetailVC(models: filteredMovies, indexPath: indexPath)
+    }
 }

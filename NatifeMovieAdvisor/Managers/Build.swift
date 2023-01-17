@@ -7,8 +7,6 @@
 
 import UIKit
 
-//typealias VoidClosure = () -> Void
-
 public func build<T: NSObject>(builder: (T) -> Void) -> T {
     build(.init(), builder: builder)
 }
