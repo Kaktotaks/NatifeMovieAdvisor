@@ -5,8 +5,6 @@
 //  Created by Леонід Шевченко on 10.01.2023.
 //
 
-// https://api.themoviedb.org/3/movie/811656api_key=242869b42a65c82d7bfdc955a766ce9f/811656
-
 import Foundation
 import Alamofire
 
@@ -32,6 +30,7 @@ enum APIConstants {
 
 class RestService {
     public var totalRezults = 0
+//    public var gotVideo = true
 
     static let shared: RestService = .init()
 
@@ -47,11 +46,9 @@ class RestService {
         completion: @escaping(AFDataResponse<Any>) -> Void
     ) {
         let url = "\(APIConstants.mainURL)\(endPoint)?api_key=\(APIConstants.apiKey)\(path)"
-        debugPrint(url)
 
         if let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) {
 
-//            AF.session.configuration.timeoutIntervalForRequest = 3
             AF.request(
                 encoded,
                 method: method,
@@ -94,8 +91,6 @@ class RestService {
             path = "\(path)&year=\(yearKey)"
         }
 
-        debugPrint(path)
-
         getJsonResponse(path, endPoint: endPoint) { [weak self] response in
             guard let self = self else { return }
 
@@ -113,19 +108,18 @@ class RestService {
         }
     }
 
+    // MARK: - Getting detail information from API
     func getMoviewDetail(
         movieID: Int,
         language: String?,
         completionHandler: @escaping(Result<MovieDetailsModel, Error>) -> Void
     ) {
-        var endPoint = APIConstants.EndPoints.getMovieDetailEndPoint + movieID.description
+        let endPoint = APIConstants.EndPoints.getMovieDetailEndPoint + movieID.description
         var path = ""
 
         if let languageKey = language {
             path = "\(path)&language=\(languageKey)"
         }
-
-        debugPrint(path)
 
         getJsonResponse(path, endPoint: endPoint) { response in
             switch response.result {
@@ -141,13 +135,12 @@ class RestService {
         }
     }
 
+    // MARK: - Getting YouTube video from API
     func getMovieVideos(
         movieID: Int,
         completionHandler: @escaping(Result<[MovieVideoModel], Error>) -> Void
     ) {
-        var fullVideoPath = APIConstants.EndPoints.getMovieDetailEndPoint + movieID.description + APIConstants.videosPath
-
-        debugPrint(fullVideoPath)
+        let fullVideoPath = APIConstants.EndPoints.getMovieDetailEndPoint + movieID.description + APIConstants.videosPath
 
         getJsonResponse("", endPoint: fullVideoPath) { response in
             switch response.result {
@@ -155,6 +148,11 @@ class RestService {
                     let decoder = JSONDecoder()
                     if let data = try? decoder.decode(MovieVideoEntryPointModel.self, from: response.data ?? Data()) {
                             let videos = data.results ?? []
+
+//                            if videos.isEmpty {
+//                                self.gotVideo = false
+//                            }
+
                         completionHandler(.success(videos))
                     }
                 case .failure(let error):

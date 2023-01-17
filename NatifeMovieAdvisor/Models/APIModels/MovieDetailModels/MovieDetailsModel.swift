@@ -3,9 +3,9 @@ import Foundation
 struct MovieDetailsModel: Codable {
 	let adult: Bool?
 	let backdropPath: String?
-	let belongsToCollection: String?
+	let belongsToCollection: BelongsToCollectionModel?
 	let budget: Int?
-	let genres: [Genres]?
+	let genres: [GenresModel]?
     let homepage: String?
 	let id: Int?
 	let imdbId: String?
@@ -59,9 +59,9 @@ struct MovieDetailsModel: Codable {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		adult = try values.decodeIfPresent(Bool.self, forKey: .adult)
 		backdropPath = try values.decodeIfPresent(String.self, forKey: .backdropPath)
-		belongsToCollection = try values.decodeIfPresent(String.self, forKey: .belongsToCollection)
+		belongsToCollection = try values.decodeIfPresent(BelongsToCollectionModel.self, forKey: .belongsToCollection)
 		budget = try values.decodeIfPresent(Int.self, forKey: .budget)
-		genres = try values.decodeIfPresent([Genres].self, forKey: .genres)
+		genres = try values.decodeIfPresent([GenresModel].self, forKey: .genres)
 		homepage = try values.decodeIfPresent(String.self, forKey: .homepage)
 		id = try values.decodeIfPresent(Int.self, forKey: .id)
 		imdbId = try values.decodeIfPresent(String.self, forKey: .imdbId)

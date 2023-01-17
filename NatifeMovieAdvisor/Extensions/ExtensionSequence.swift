@@ -9,6 +9,6 @@ import Foundation
 
 extension Sequence {
     var minimalDescription: String {
-        return map { "\($0)" }.joined(separator: ", ")
+        map { "\($0)" }.joined(separator: ", ")
     }
 }
