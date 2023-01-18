@@ -44,6 +44,7 @@
 		E4F263BB2975E8E00084A928 /* MovieVideoEntryPointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263B92975E8E00084A928 /* MovieVideoEntryPointModel.swift */; };
 		E4F263BF2976A60A0084A928 /* BelongsToCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263BE2976A60A0084A928 /* BelongsToCollectionModel.swift */; };
 		E4F263C12976FCFA0084A928 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263C02976FCFA0084A928 /* ImageViewController.swift */; };
+		E4F263C42977F5710084A928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4F263C62977F5710084A928 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,8 @@
 		E4F263B92975E8E00084A928 /* MovieVideoEntryPointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieVideoEntryPointModel.swift; sourceTree = "<group>"; };
 		E4F263BE2976A60A0084A928 /* BelongsToCollectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BelongsToCollectionModel.swift; sourceTree = "<group>"; };
 		E4F263C02976FCFA0084A928 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		E4F263C52977F5710084A928 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E4F263C72977F58B0084A928 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,8 +250,8 @@
 		E4828354296EF3E600FE76CD /* Strings */ = {
 			isa = PBXGroup;
 			children = (
+				E4F263C62977F5710084A928 /* Localizable.strings */,
 				E4828355296EF3F600FE76CD /* Constants.swift */,
-				E4828357296EF41E00FE76CD /* StringExtension.swift */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				E48283632971790C00FE76CD /* ExtensionSequence.swift */,
+				E4828357296EF41E00FE76CD /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -341,6 +345,7 @@
 			knownRegions = (
 				en,
 				Base,
+				uk,
 			);
 			mainGroup = E4828305296D92E300FE76CD;
 			packageReferences = (
@@ -365,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E482831E296D92E800FE76CD /* Assets.xcassets in Resources */,
+				E4F263C42977F5710084A928 /* Localizable.strings in Resources */,
 				E4828348296DA99B00FE76CD /* movieLoading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +437,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E4F263C62977F5710084A928 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4F263C52977F5710084A928 /* en */,
+				E4F263C72977F58B0084A928 /* uk */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E4828323296D92E800FE76CD /* Debug */ = {

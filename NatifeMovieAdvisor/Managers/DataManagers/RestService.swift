@@ -22,7 +22,8 @@ enum APIConstants {
 
     static let pageLimit = 20
 
-    static var currentLanguage: String? = "en"
+//    static var currentAppLanguageID = NSLocale.current.language.languageCode?.identifier
+    static var currentAppLanguageID: String? = NSLocale.current.language.languageCode?.identifier
     static var currentRegion: String? = "us"
     static var currentYear: String? = "2022"
     static var currentPage = 1

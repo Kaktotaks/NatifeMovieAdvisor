@@ -1,0 +1,9 @@
+// MARK: - Alert localization
+"somethingWentWrong" = "Something went wrong:";
+"noInformation" = "Unfortunately, no information was found for the given parameters.";
+"NoData" = "No information";
+"noDataByThisParametrs" = "Unfortunately, no information was found for the given parameters.";
+
+// MARK: - Base text
+"popularMovies" = "Popular Movies";
+"searchForMovies" = "Search for movies";

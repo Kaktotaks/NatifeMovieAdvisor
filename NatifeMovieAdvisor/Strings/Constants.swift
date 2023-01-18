@@ -8,9 +8,10 @@
 import UIKit
 
 enum Constants {
+    
     enum AlertAnswers {
         static var somethingWentWrongAnswear = "somethingWentWrong".localized()
-        static var noDataByThisParametrs = "noInformation".localized()
+        static var noDataByThisParametrs = "noDataByThisParametrs".localized()
     }
 
     enum Fonts {
@@ -20,9 +21,9 @@ enum Constants {
     }
 
     // MARK: - Another constants:
-    static let noData = "No data".localized()
-    static let popularMoviesTitle = "Popular Movies".localized()
-    static let searchMoviesPlaceholder = "Search for Movies".localized()
+    static let noData = "NoData".localized()
+    static let popularMoviesTitle = "popularMovies".localized()
+    static let searchMoviesPlaceholder = "searchForMovies".localized()
     static let noImageURL = "https://us.123rf.com/450wm/koblizeek/koblizeek1902/koblizeek190200055/koblizeek190200055.jpg?ver=6"
     static let movieTableViewHeight = CGFloat(540)
     static let loaderTableViewHeight = CGFloat(60)

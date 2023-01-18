@@ -13,6 +13,8 @@ class MoviesListViewController: BaseViewController {
     private lazy var moviesTableView: UITableView = build {
         $0.separatorStyle = .none
     }
+    
+//    var currentLanguage = APIConstants.currentAppLanguageID
 
     private lazy var upButton: UIButton = build {
         $0.setImage(UIImage(systemName: "chevron.up"), for: .normal)
@@ -39,6 +41,7 @@ class MoviesListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        debugPrint(currentLanguage)
         setupUI()
         setUpTableView()
         getAllPopMovies()
@@ -49,7 +52,7 @@ class MoviesListViewController: BaseViewController {
     // MARK: - Methods
     private func getAllPopMovies(
         showActivityIndicator: Bool = true,
-        language: String? = APIConstants.currentLanguage,
+        language: String? = APIConstants.currentAppLanguageID,
         region: String? = APIConstants.currentRegion,
         year: String? = APIConstants.currentYear,
         query: String? = nil,
@@ -98,7 +101,7 @@ class MoviesListViewController: BaseViewController {
 
         self.getAllPopMovies(
             showActivityIndicator: false,
-            language: APIConstants.currentLanguage,
+            language: APIConstants.currentAppLanguageID,
             region: APIConstants.currentRegion,
             year: APIConstants.currentYear,
             query: nil,
@@ -161,7 +164,7 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
 
             getAllPopMovies(
                 showActivityIndicator: false,
-                language: APIConstants.currentLanguage,
+                language: APIConstants.currentAppLanguageID,
                 region: APIConstants.currentRegion,
                 year: APIConstants.currentYear,
                 query: nil,

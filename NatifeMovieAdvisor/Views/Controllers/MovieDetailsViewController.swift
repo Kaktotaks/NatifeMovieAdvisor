@@ -95,7 +95,7 @@ class MovieDetailsViewController: UIViewController {
 
         RestService.shared.getMoviewDetail(
             movieID: movieID, // Change to right from Delegate
-            language: APIConstants.currentLanguage
+            language: APIConstants.currentAppLanguageID
         ) { [weak self] result in
             guard let self = self else { return }
 

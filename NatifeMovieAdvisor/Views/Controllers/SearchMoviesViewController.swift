@@ -38,7 +38,7 @@ class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
         debugPrint(query)
 
         RestService.shared.getAllPopMovies(
-            language: APIConstants.currentLanguage,
+            language: APIConstants.currentAppLanguageID,
             region: APIConstants.currentRegion,
             year: APIConstants.currentYear,
             query: query,
