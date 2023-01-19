@@ -29,3 +29,12 @@
 "Thriller" = "Триллери";
 "War" = "Війни";
 "Western" = "Вестерни";
+
+// MARK: - UIMenu text
+"filterSortTitle" = "Фільтр/Сортування списку фільмів";
+"filterByTitle" = "Фільтрувати за:";
+"sortByTitle" = "Сортувати за:";
+"yearTitle" = "Рік";
+"regionTitle" = "Регіон";
+"voteAvaraggeTitle" = "Середня оцінка";
+"popularityTitle" = "Популярність";

@@ -81,12 +81,20 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        requestVideos()
         configureNavigationBarItems()
         getMovieDetail()
+        requestVideos()
         configureSubviews()
         configureConstraints()
         addGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        if gotVideo == false {
+//            videoPlayerView.removeFromSuperview()
+//        }
     }
 
     // MARK: - Methods
@@ -176,12 +184,6 @@ class MovieDetailsViewController: UIViewController {
     @objc private func gestureFired(_ gesture: UITapGestureRecognizer) {
         let imageVC = ImageViewController(movieImage: posterImageView)
         let navVC = UINavigationController(rootViewController: imageVC)
-
-        if let sheet = navVC.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 20
-        }
         self.present(navVC, animated: true)
     }
 }
@@ -220,10 +222,6 @@ extension MovieDetailsViewController {
         contentStackView.setCustomSpacing(10, after: voteAverageLabel)
         contentStackView.setCustomSpacing(14, after: genresLabel)
         contentStackView.setCustomSpacing(14, after: overviewLabel)
-
-//        if gotVideo == true {
-//            contentStackView.addArrangedSubview(videoPlayerView)
-//        }
     }
 
     private func configureConstraints() {

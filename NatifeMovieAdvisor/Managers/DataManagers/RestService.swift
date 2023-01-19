@@ -22,8 +22,7 @@ enum APIConstants {
 
     static let pageLimit = 20
 
-//    static var currentAppLanguageID = NSLocale.current.language.languageCode?.identifier
-    static var currentAppLanguageID: String? = NSLocale.current.language.languageCode?.identifier
+    static var currentAppLanguageID: String? = NSLocale.current.languageCode
     static var currentRegion: String? = "us"
     static var currentYear: String? = "2022"
     static var currentPage = 1
@@ -47,6 +46,7 @@ class RestService {
         completion: @escaping(AFDataResponse<Any>) -> Void
     ) {
         let url = "\(APIConstants.mainURL)\(endPoint)?api_key=\(APIConstants.apiKey)\(path)"
+        debugPrint(url)
 
         if let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) {
 
@@ -57,7 +57,6 @@ class RestService {
                 encoding: encoding,
                 headers: nil
             ).responseJSON { response in
-                debugPrint("Successfull network request")
                 completion(response)
             }
         }

@@ -7,3 +7,12 @@
 // MARK: - Base text
 "popularMovies" = "Popular Movies";
 "searchForMovies" = "Search for movies";
+
+// MARK: - UIMenu text
+"filterSortTitle" = "Filter/Sort list of movies";
+"filterByTitle" = "Filter by:";
+"sortByTitle" = "Sort by:";
+"yearTitle" = "Year";
+"regionTitle" = "Region";
+"voteAvaraggeTitle" = "Vote avarage";
+"popularityTitle" = "Popularity";
