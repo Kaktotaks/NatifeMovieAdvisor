@@ -67,7 +67,6 @@ class MovieDetailsViewController: UIViewController {
     }
 
     private var movieID: Int?
-//    private var gotVideo = RestService.shared.gotVideo
 
     init(movieID: Int?) {
         self.movieID = movieID
@@ -87,14 +86,6 @@ class MovieDetailsViewController: UIViewController {
         configureSubviews()
         configureConstraints()
         addGesture()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//        if gotVideo == false {
-//            videoPlayerView.removeFromSuperview()
-//        }
     }
 
     // MARK: - Methods

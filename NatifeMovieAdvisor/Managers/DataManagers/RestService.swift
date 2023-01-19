@@ -30,7 +30,6 @@ enum APIConstants {
 
 class RestService {
     public var totalRezults = 0
-//    public var gotVideo = true
 
     static let shared: RestService = .init()
 
@@ -148,11 +147,6 @@ class RestService {
                     let decoder = JSONDecoder()
                     if let data = try? decoder.decode(MovieVideoEntryPointModel.self, from: response.data ?? Data()) {
                             let videos = data.results ?? []
-
-//                            if videos.isEmpty {
-//                                self.gotVideo = false
-//                            }
-
                         completionHandler(.success(videos))
                     }
                 case .failure(let error):
