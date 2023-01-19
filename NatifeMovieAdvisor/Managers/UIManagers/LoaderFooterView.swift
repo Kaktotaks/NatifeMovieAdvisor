@@ -11,7 +11,10 @@ struct LoaderFooterView {
     static let shared = LoaderFooterView()
     private init() {}
 
-    func createLoaderFooterView(viewController: UIViewController, tableView: UITableView) -> UIView {
+    func createLoaderFooterView(
+        viewController: UIViewController,
+        tableView: UITableView
+    ) -> UIView {
         let footerView = UIView(
             frame: CGRect(
                 x: 0,

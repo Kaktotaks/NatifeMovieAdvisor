@@ -35,10 +35,8 @@ class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
 
-        debugPrint(query)
-
         RestService.shared.getAllPopMovies(
-            language: APIConstants.currentLanguage,
+            language: APIConstants.currentAppLanguageID,
             region: APIConstants.currentRegion,
             year: APIConstants.currentYear,
             query: query,

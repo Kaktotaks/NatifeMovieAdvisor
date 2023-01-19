@@ -1,0 +1,40 @@
+// MARK: - Alert localization
+"somethingWentWrong" = "Щось пішло не так:";
+"noInformation" = "На жаль, за наданними параметрами інформації не знайдено.";
+"NoData" = "Інформація відсутня";
+"noDataByThisParametrs" = "На жаль, за наданними параметрами інформації не знайдено.";
+
+// MARK: - Base text
+"popularMovies" = "Популярні фільми";
+"searchForMovies" = "Введіть назву бажаного фільму";
+
+
+// MARK: - Genres
+"Action" = "Бойовики";
+"Adventure" = "Пригоди";
+"Animation" = "Мультфільми";
+"Comedy" = "Комедії";
+"Crime" = "Кримінал";
+"Documentary" = "Документальні";
+"Drama" = "Драми";
+"Family" = "Сімейні";
+"Fantasy" = "Фентезі";
+"History" = "Історичні";
+"Horror" = "Ужаси";
+"Music" = "Мюзикли";
+"Mystery" = "Містика";
+"Romance" = "Роман";
+"Science Fiction" = "Наукова Фантастика";
+"TV Movie" = "Серіали";
+"Thriller" = "Триллери";
+"War" = "Війни";
+"Western" = "Вестерни";
+
+// MARK: - UIMenu text
+"filterSortTitle" = "Фільтр/Сортування списку фільмів";
+"filterByTitle" = "Фільтрувати за:";
+"sortByTitle" = "Сортувати за:";
+"yearTitle" = "Рік";
+"regionTitle" = "Регіон";
+"voteAvaraggeTitle" = "Середня оцінка";
+"popularityTitle" = "Популярність";

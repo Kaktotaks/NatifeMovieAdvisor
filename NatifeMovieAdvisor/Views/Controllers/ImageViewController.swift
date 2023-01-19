@@ -32,7 +32,7 @@ class ImageViewController: UIViewController {
 
     // MARK: - Methods
     private func setupUI() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.8)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.9)
         movieImage.frame = view.bounds
         view.addSubview(movieImage)
     }

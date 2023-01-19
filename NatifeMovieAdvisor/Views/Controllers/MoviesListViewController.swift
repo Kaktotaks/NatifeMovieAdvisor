@@ -15,7 +15,7 @@ class MoviesListViewController: BaseViewController {
     }
 
     private lazy var upButton: UIButton = build {
-        $0.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+        $0.setImage(UIImage(systemName: Constants.upButtonImage), for: .normal)
         $0.tintColor = .label
         $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
@@ -28,13 +28,17 @@ class MoviesListViewController: BaseViewController {
 
     // MARK: - Setup UISearchController
     private let searchController = UISearchController(searchResultsController: SearchMoviesViewController())
+
     private var isSearchBarEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
-            return text.isEmpty
+        return text.isEmpty
     }
+
     private var isFiltering: Bool {
         searchController.isActive && !isSearchBarEmpty
     }
+
+    private var currentSortingParametr = SortByParametr.popularity
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +48,13 @@ class MoviesListViewController: BaseViewController {
         getAllPopMovies()
         setUpSearchController()
         setUpRefreshControl()
+        setupFilteredByButton()
     }
 
     // MARK: - Methods
     private func getAllPopMovies(
         showActivityIndicator: Bool = true,
-        language: String? = APIConstants.currentLanguage,
+        language: String? = APIConstants.currentAppLanguageID,
         region: String? = APIConstants.currentRegion,
         year: String? = APIConstants.currentYear,
         query: String? = nil,
@@ -71,9 +76,16 @@ class MoviesListViewController: BaseViewController {
             switch result {
                 case .success(let movies):
                     self.moviesModel.append(contentsOf: movies)
+
                     DispatchQueue.main.async {
                         ActivityIndicatorView.shared.hide()
                         self.moviesTableView.reloadData()
+                        switch self.currentSortingParametr {
+                            case .voteAvarage:
+                                self.setSortedModelToTableView(parametr: .voteAvarage)
+                            case .popularity:
+                                self.setSortedModelToTableView(parametr: .popularity)
+                        }
                     }
                 case .failure(let error):
                     ActivityIndicatorView.shared.hide()
@@ -98,7 +110,7 @@ class MoviesListViewController: BaseViewController {
 
         self.getAllPopMovies(
             showActivityIndicator: false,
-            language: APIConstants.currentLanguage,
+            language: APIConstants.currentAppLanguageID,
             region: APIConstants.currentRegion,
             year: APIConstants.currentYear,
             query: nil,
@@ -117,9 +129,10 @@ class MoviesListViewController: BaseViewController {
     @objc private func upButtonPressed() {
         let topRow = IndexPath(row: 0, section: 0)
 
-        moviesTableView.scrollToRow(at: topRow,
-                                   at: .top,
-                                   animated: true
+        moviesTableView.scrollToRow(
+            at: topRow,
+            at: .top,
+            animated: true
         )
     }
 
@@ -131,6 +144,54 @@ class MoviesListViewController: BaseViewController {
         searchController.searchBar.placeholder = Constants.searchMoviesPlaceholder
         navigationItem.searchController = searchController
         definesPresentationContext = true
+    }
+
+    private func setupFilteredByButton() {
+        let filterByMenu = UIMenu(
+            title: Constants.MenuTexts.filterByTitle,
+            children: [
+                UIMenu(
+                    title: Constants.MenuTexts.yearTitle,
+                    image: UIImage(systemName: Constants.MenuTexts.calendarImage),
+                    children: addYearAction()
+                ),
+                UIMenu(
+                    title: Constants.MenuTexts.regionTitle,
+                    image: UIImage(systemName: Constants.MenuTexts.flagImage),
+                    children: addRegionAction()
+                )
+            ]
+        )
+
+        let sortByMenu = UIMenu(
+            title: Constants.MenuTexts.sortByTitle,
+            children: [
+                UIAction(
+                    title: Constants.MenuTexts.voteAvaraggeTitle,
+                    image: UIImage(systemName: Constants.MenuTexts.starImage)
+                ) { _ in
+                    self.setSortedModelToTableView(parametr: .voteAvarage)
+                },
+                UIAction(
+                    title: Constants.MenuTexts.popularityTitle,
+                    image: UIImage(systemName: Constants.MenuTexts.personsImage)
+                ) { _ in
+                    self.setSortedModelToTableView(parametr: .popularity)
+                }
+            ]
+        )
+
+        let menu = UIMenu(
+            title: Constants.MenuTexts.filterSortTitle,
+            children: [sortByMenu, filterByMenu]
+        )
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: nil,
+            image: UIImage(systemName: Constants.MenuTexts.sliderImage),
+            primaryAction: nil,
+            menu: menu
+        )
     }
 }
 
@@ -150,10 +211,7 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
         let totalRezults = RestService.shared.totalRezults
 
         if indexPath.row == moviesModel.count - 1 && totalRezults > moviesModel.count {
-
-            debugPrint("load new movies...")
             APIConstants.currentPage += 1
-            debugPrint("Current page now is: \(APIConstants.currentPage)")
             self.moviesTableView.tableFooterView = LoaderFooterView.shared.createLoaderFooterView(
                 viewController: self,
                 tableView: moviesTableView
@@ -161,7 +219,7 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
 
             getAllPopMovies(
                 showActivityIndicator: false,
-                language: APIConstants.currentLanguage,
+                language: APIConstants.currentAppLanguageID,
                 region: APIConstants.currentRegion,
                 year: APIConstants.currentYear,
                 query: nil,
@@ -213,5 +271,67 @@ extension MoviesListViewController {
                 upButton.isHidden = true
             }
         }
+    }
+}
+
+// MARK: - Setup sorting parametrs:
+// swiftlint: disable all
+extension MoviesListViewController {
+    enum SortByParametr {
+        case voteAvarage, popularity
+    }
+
+    func setSortedModelToTableView(parametr: SortByParametr) {
+        if parametr == .popularity {
+            let sortedModel = self.moviesModel.sortArray(by: \.popularity!)
+            self.moviesModel.removeAll()
+            self.moviesModel.append(contentsOf: sortedModel)
+            self.currentSortingParametr = .popularity
+            self.moviesTableView.reloadData()
+        } else if parametr == .voteAvarage {
+            let sortedModel = self.moviesModel.sortArray(by: \.voteAverage!)
+            self.moviesModel.removeAll()
+            self.moviesModel.append(contentsOf: sortedModel)
+            self.currentSortingParametr = .voteAvarage
+            self.moviesTableView.reloadData()
+        }
+    }
+    
+    // MARK: - Methods for adding UIMenu actions
+    func addYearAction() -> [UIAction] {
+        var result = [UIAction]()
+
+        for year in 2010...2022 {
+            let action = UIAction(title: "\(year)") { _ in
+                APIConstants.currentYear = "\(year)"
+                APIConstants.currentPage = 1
+                self.moviesModel.removeAll()
+                self.getAllPopMovies(
+                    year: "\(APIConstants.currentYear ?? "2022")",
+                    page: APIConstants.currentPage
+                )
+            }
+            result.append(action)
+        }
+        return result.reversed()
+    }
+
+    func addRegionAction() -> [UIAction] {
+        let regions = ["us", "gb", "fr", "es", "no"]
+        var result = [UIAction]()
+        
+        for region in regions {
+            let action = UIAction(title: "\(region)") { _ in
+                APIConstants.currentRegion = region
+                APIConstants.currentPage = 1
+                self.moviesModel.removeAll()
+                self.getAllPopMovies(
+                    region: region,
+                    page: APIConstants.currentPage
+                )
+            }
+            result.append(action)
+        }
+        return result
     }
 }

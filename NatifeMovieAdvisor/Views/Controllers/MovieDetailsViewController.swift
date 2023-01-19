@@ -67,7 +67,6 @@ class MovieDetailsViewController: UIViewController {
     }
 
     private var movieID: Int?
-//    private var gotVideo = RestService.shared.gotVideo
 
     init(movieID: Int?) {
         self.movieID = movieID
@@ -81,9 +80,9 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        requestVideos()
         configureNavigationBarItems()
         getMovieDetail()
+        requestVideos()
         configureSubviews()
         configureConstraints()
         addGesture()
@@ -95,7 +94,7 @@ class MovieDetailsViewController: UIViewController {
 
         RestService.shared.getMoviewDetail(
             movieID: movieID, // Change to right from Delegate
-            language: APIConstants.currentLanguage
+            language: APIConstants.currentAppLanguageID
         ) { [weak self] result in
             guard let self = self else { return }
 
@@ -176,12 +175,6 @@ class MovieDetailsViewController: UIViewController {
     @objc private func gestureFired(_ gesture: UITapGestureRecognizer) {
         let imageVC = ImageViewController(movieImage: posterImageView)
         let navVC = UINavigationController(rootViewController: imageVC)
-
-        if let sheet = navVC.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 20
-        }
         self.present(navVC, animated: true)
     }
 }
@@ -220,10 +213,6 @@ extension MovieDetailsViewController {
         contentStackView.setCustomSpacing(10, after: voteAverageLabel)
         contentStackView.setCustomSpacing(14, after: genresLabel)
         contentStackView.setCustomSpacing(14, after: overviewLabel)
-
-//        if gotVideo == true {
-//            contentStackView.addArrangedSubview(videoPlayerView)
-//        }
     }
 
     private func configureConstraints() {

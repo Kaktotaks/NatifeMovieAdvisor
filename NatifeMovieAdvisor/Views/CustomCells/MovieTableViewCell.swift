@@ -75,7 +75,7 @@ class MovieTableViewCell: UITableViewCell {
         setupConstraints()
     }
 
-    // MARK: - Func configure with viewModel (API model / CoreData Model)
+    // MARK: - Func configure with viewModel (API model)
     func configure(_ viewModel: MovieTableViewCellViewModel) {
         if let posterURL = viewModel.posterPath {
             let moviePosterImageURL = URL(string: APIConstants.imageBaseURL + posterURL)
