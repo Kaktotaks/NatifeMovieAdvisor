@@ -33,12 +33,13 @@ class MovieTableViewCell: UITableViewCell {
         $0.spacing = .zero
         $0.isLayoutMarginsRelativeArrangement = true
         $0.layoutMargins = .init()
+        $0.distribution = .fill
     }
 
     private lazy var movieTitleLabel: UILabel = build {
         $0.font = Constants.Fonts.bigSemiBoldFont
         $0.textAlignment = .center
-        $0.numberOfLines = 0
+        $0.numberOfLines = 2
         $0.text = Constants.noData
         $0.textColor = .white
         $0.shadowColor = .lightGray
@@ -112,7 +113,7 @@ extension MovieTableViewCell {
         contentView.addSubview(posterImageView)
         posterImageView.addSubview(gradientView)
         gradientView.addSubview(contentStackView)
-        contentStackView.distribution = .fill
+
         [
             movieTitleLabel,
             genresLabel,
@@ -131,7 +132,7 @@ extension MovieTableViewCell {
 
         gradientView.snp.makeConstraints {
             $0.width.bottom.equalToSuperview()
-            $0.height.equalTo(posterImageView.snp.height).dividedBy(2)
+            $0.height.equalTo(posterImageView.snp.height).dividedBy(2.5)
         }
 
         contentStackView.snp.makeConstraints {
