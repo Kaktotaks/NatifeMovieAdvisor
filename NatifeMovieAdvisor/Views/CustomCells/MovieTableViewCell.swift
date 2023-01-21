@@ -112,7 +112,7 @@ extension MovieTableViewCell {
         contentView.addSubview(posterImageView)
         posterImageView.addSubview(gradientView)
         gradientView.addSubview(contentStackView)
-
+        contentStackView.distribution = .fill
         [
             movieTitleLabel,
             genresLabel,
@@ -138,22 +138,6 @@ extension MovieTableViewCell {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().inset(12)
             $0.width.equalToSuperview()
-        }
-
-        movieTitleLabel.snp.makeConstraints {
-            $0.height.equalTo(movieTitleLabel.snp.height)
-        }
-
-        voteAverageLabel.snp.makeConstraints {
-            $0.height.equalTo(voteAverageLabel.snp.height)
-        }
-
-        genresLabel.snp.makeConstraints {
-            $0.height.equalTo(genresLabel.snp.height)
-        }
-
-        releaseDateLabel.snp.makeConstraints {
-            $0.height.equalTo(releaseDateLabel.snp.height)
         }
     }
 }
