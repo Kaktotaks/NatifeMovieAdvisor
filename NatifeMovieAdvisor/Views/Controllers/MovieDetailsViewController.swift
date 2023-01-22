@@ -17,13 +17,14 @@ class MovieDetailsViewController: UIViewController {
 
     private lazy var contentStackView: UIStackView = build {
         $0.axis = .vertical
-        $0.spacing = .zero
         $0.isLayoutMarginsRelativeArrangement = true
         $0.layoutMargins = .init()
+        $0.distribution = .fill
     }
 
     private lazy var posterImageView: UIImageView = build {
         $0.contentMode = .scaleAspectFill
+//        $0.clipsToBounds = true
     }
 
     private lazy var gradientView: GradientView = build {
@@ -37,6 +38,7 @@ class MovieDetailsViewController: UIViewController {
         $0.font = Constants.Fonts.bigSemiBoldFont
         $0.shadowColor = .lightGray
         $0.shadowOffset = CGSize(width: -1, height: 2)
+        $0.textAlignment = .center
     }
 
     private lazy var countryLabel: UILabel = build {
@@ -138,13 +140,13 @@ class MovieDetailsViewController: UIViewController {
 
         if let avarage = movieModel?.voteAverage {
             let roundedAvarage = Double(round(10 * avarage) / 10)
-            voteAverageLabel.text = "⭐️: \(roundedAvarage)"
+            voteAverageLabel.text = " ⭐️: \(roundedAvarage)"
         }
 
         titleLabel.text = movieModel?.title
-        countryLabel.text = "🌏: \(movieModel?.productionCountries?.first?.name ?? "")"
-        releaseDateLabel.text = "🗓️: \(movieModel?.releaseDate ?? "")"
-        genresLabel.text = "🎭: \(configureGenres(movieModel).minimalDescription)"
+        countryLabel.text = " 🌏: \(movieModel?.productionCountries?.first?.name ?? "")"
+        releaseDateLabel.text = " 🗓️: \(movieModel?.releaseDate ?? "")"
+        genresLabel.text = " 🎭: \(configureGenres(movieModel).minimalDescription)"
         overviewLabel.text = movieModel?.overview
     }
 
@@ -227,40 +229,11 @@ extension MovieDetailsViewController {
         }
 
         posterImageView.snp.makeConstraints {
-            $0.height.equalTo(270)
+            $0.height.equalTo(240)
         }
 
         gradientView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-
-        titleLabel.snp.remakeConstraints {
-            $0.height.equalTo(titleLabel.snp.height)
-            $0.leading.equalTo(6)
-        }
-
-        countryLabel.snp.remakeConstraints {
-            $0.height.equalTo(countryLabel.snp.height)
-            $0.leading.equalTo(4)
-        }
-
-        releaseDateLabel.snp.remakeConstraints {
-            $0.height.equalTo(releaseDateLabel.snp.height)
-            $0.leading.equalTo(4)
-        }
-
-        genresLabel.snp.remakeConstraints {
-            $0.height.equalTo(genresLabel.snp.height)
-            $0.leading.equalTo(4)
-        }
-
-        voteAverageLabel.snp.remakeConstraints {
-            $0.height.equalTo(voteAverageLabel.snp.height)
-            $0.leading.equalTo(4)
-        }
-
-        overviewLabel.snp.remakeConstraints {
-            $0.height.equalTo(overviewLabel.snp.height)
         }
 
         videoPlayerView.snp.remakeConstraints {
