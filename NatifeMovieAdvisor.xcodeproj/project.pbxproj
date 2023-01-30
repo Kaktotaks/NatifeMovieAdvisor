@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4442D21297EC40800BB756E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4442D20297EC40800BB756E /* CustomError.swift */; };
+		E4442D23297F06B600BB756E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4442D22297F06B600BB756E /* NetworkMonitor.swift */; };
+		E4442D26297F0CCA00BB756E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E4442D25297F0CCA00BB756E /* Lottie */; };
 		E4828312296D92E300FE76CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828311296D92E300FE76CD /* AppDelegate.swift */; };
 		E4828314296D92E300FE76CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828313296D92E300FE76CD /* SceneDelegate.swift */; };
 		E4828316296D92E300FE76CD /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4828315296D92E300FE76CD /* MoviesListViewController.swift */; };
@@ -17,7 +20,6 @@
 		E482833C296DA50200FE76CD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E482833B296DA50200FE76CD /* Alamofire */; };
 		E482833F296DA52900FE76CD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E482833E296DA52900FE76CD /* SnapKit */; };
 		E4828342296DA55800FE76CD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E4828341296DA55800FE76CD /* Kingfisher */; };
-		E4828345296DA57600FE76CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E4828344296DA57600FE76CD /* Lottie */; };
 		E4828348296DA99B00FE76CD /* movieLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = E4828347296DA99B00FE76CD /* movieLoading.json */; };
 		E482834D296DFD1C00FE76CD /* PopMoviesEntryPointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482834B296DFD1C00FE76CD /* PopMoviesEntryPointModel.swift */; };
 		E482834E296DFD1C00FE76CD /* PopMoviesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482834C296DFD1C00FE76CD /* PopMoviesResponseModel.swift */; };
@@ -30,6 +32,7 @@
 		E4828360297165B300FE76CD /* OfflineGenresModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482835F297165B300FE76CD /* OfflineGenresModel.swift */; };
 		E48283642971790C00FE76CD /* SequenceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48283632971790C00FE76CD /* SequenceExtension.swift */; };
 		E48283662971877F00FE76CD /* SearchMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48283652971877F00FE76CD /* SearchMoviesViewController.swift */; };
+		E4E8CBE029858D8100A1240A /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = E4E8CBDF29858D8100A1240A /* Reachability */; };
 		E4F263A2297423120084A928 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263A1297423120084A928 /* MovieDetailsViewController.swift */; };
 		E4F263A4297424A70084A928 /* Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263A3297424A70084A928 /* Build.swift */; };
 		E4F263A629755FCE0084A928 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F263A529755FCE0084A928 /* BaseViewController.swift */; };
@@ -48,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E4442D20297EC40800BB756E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		E4442D22297F06B600BB756E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		E482830E296D92E300FE76CD /* NatifeMovieAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NatifeMovieAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4828311296D92E300FE76CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4828313296D92E300FE76CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,10 +96,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4442D26297F0CCA00BB756E /* Lottie in Frameworks */,
+				E4E8CBE029858D8100A1240A /* Reachability in Frameworks */,
 				E4828342296DA55800FE76CD /* Kingfisher in Frameworks */,
 				E482833C296DA50200FE76CD /* Alamofire in Frameworks */,
 				E482833F296DA52900FE76CD /* SnapKit in Frameworks */,
-				E4828345296DA57600FE76CD /* Lottie in Frameworks */,
 				E4F263B62975E1B90084A928 /* YouTubeiOSPlayerHelper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				E4828336296DA38000FE76CD /* RestService.swift */,
+				E4442D20297EC40800BB756E /* CustomError.swift */,
+				E4442D22297F06B600BB756E /* NetworkMonitor.swift */,
 			);
 			path = DataManagers;
 			sourceTree = "<group>";
@@ -316,8 +324,9 @@
 				E482833B296DA50200FE76CD /* Alamofire */,
 				E482833E296DA52900FE76CD /* SnapKit */,
 				E4828341296DA55800FE76CD /* Kingfisher */,
-				E4828344296DA57600FE76CD /* Lottie */,
 				E4F263B52975E1B90084A928 /* YouTubeiOSPlayerHelper */,
+				E4442D25297F0CCA00BB756E /* Lottie */,
+				E4E8CBDF29858D8100A1240A /* Reachability */,
 			);
 			productName = NatifeMovieAdvisor;
 			productReference = E482830E296D92E300FE76CD /* NatifeMovieAdvisor.app */;
@@ -352,8 +361,9 @@
 				E482833A296DA50200FE76CD /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E482833D296DA52900FE76CD /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E4828340296DA55800FE76CD /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				E4828343296DA57600FE76CD /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E4F263B42975E1B90084A928 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
+				E4442D24297F0CCA00BB756E /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				E4E8CBDE29858D8100A1240A /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = E482830F296D92E300FE76CD /* Products */;
 			projectDirPath = "";
@@ -404,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4F263A2297423120084A928 /* MovieDetailsViewController.swift in Sources */,
+				E4442D23297F06B600BB756E /* NetworkMonitor.swift in Sources */,
 				E4F263AF2975688F0084A928 /* ProductionCountriesModel.swift in Sources */,
 				E4828316296D92E300FE76CD /* MoviesListViewController.swift in Sources */,
 				E4F263B22975688F0084A928 /* SpokenLanguagesModel.swift in Sources */,
@@ -429,6 +440,7 @@
 				E4F263C12976FCFA0084A928 /* ImageViewController.swift in Sources */,
 				E4F263BB2975E8E00084A928 /* MovieVideoEntryPointModel.swift in Sources */,
 				E4828350296DFF6000FE76CD /* MovieTableViewCellViewModel.swift in Sources */,
+				E4442D21297EC40800BB756E /* CustomError.swift in Sources */,
 				E4828353296EF39000FE76CD /* MyAlertManager.swift in Sources */,
 				E4828312296D92E300FE76CD /* AppDelegate.swift in Sources */,
 				E4F263B12975688F0084A928 /* ProductionCompaniesModel.swift in Sources */,
@@ -649,6 +661,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E4442D24297F0CCA00BB756E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.1.2;
+			};
+		};
 		E482833A296DA50200FE76CD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -673,12 +693,12 @@
 				version = 7.0.0;
 			};
 		};
-		E4828343296DA57600FE76CD /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		E4E8CBDE29858D8100A1240A /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
 				kind = exactVersion;
-				version = 4.0.1;
+				version = 5.0.0;
 			};
 		};
 		E4F263B42975E1B90084A928 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
@@ -692,6 +712,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E4442D25297F0CCA00BB756E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4442D24297F0CCA00BB756E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		E482833B296DA50200FE76CD /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E482833A296DA50200FE76CD /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -707,10 +732,10 @@
 			package = E4828340296DA55800FE76CD /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		E4828344296DA57600FE76CD /* Lottie */ = {
+		E4E8CBDF29858D8100A1240A /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E4828343296DA57600FE76CD /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
+			package = E4E8CBDE29858D8100A1240A /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 		E4F263B52975E1B90084A928 /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;
