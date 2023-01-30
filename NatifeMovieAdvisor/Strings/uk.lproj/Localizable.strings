@@ -1,13 +1,13 @@
 // MARK: - Alert localization
 "somethingWentWrong" = "Щось пішло не так:";
-"noInformation" = "На жаль, за наданними параметрами інформації не знайдено.";
-"NoData" = "Інформація відсутня";
 "noDataByThisParametrs" = "На жаль, за наданними параметрами інформації не знайдено.";
+"noConnection" = "Ви не підключені до мережі Інтернет. Будь ласка, підключіться використовуючи Wi-Fi або стільникові данні.";
+"noConnectionShort" = "Відсутній інтернет зв'язок";
 
 // MARK: - Base text
 "popularMovies" = "Популярні фільми";
 "searchForMovies" = "Введіть назву бажаного фільму";
-
+"noData" = "Інформація відсутня";
 
 // MARK: - Genres
 "Action" = "Бойовики";

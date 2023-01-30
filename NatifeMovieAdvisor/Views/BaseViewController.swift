@@ -8,18 +8,34 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    let networkMonitor = NetworkMonitor.shared
+
     // MARK: - DataSource/Delegate methods
     func presentMovieDetailVC(
         models: [PopMoviesResponseModel],
         indexPath: IndexPath
     ) {
-        let movieID = models[indexPath.row].id
-        let movieDetailVC = MovieDetailsViewController(movieID: movieID)
+        if networkMonitor.isConnected == false {
+            let actions: [MyAlertManager.Action] = [
+                .init(title: "ok", style: .default)
+            ]
 
-        let navVC = UINavigationController(rootViewController: movieDetailVC)
-        navVC.modalPresentationStyle = .fullScreen
-        navVC.modalTransitionStyle = .flipHorizontal
-        self.present(navVC, animated: true)
+            let alert = MyAlertManager.shared.presentAlertWithOptions(
+                title: Constants.AlertAnswers.somethingWentWrongAnswear,
+                message: Constants.AlertAnswers.noConnection,
+                actions: actions,
+                dismissActionTitle: nil
+            )
+            self.present(alert, animated: true)
+        } else {
+            let movieID = models[indexPath.row].id
+            let movieDetailVC = MovieDetailsViewController(movieID: movieID)
+
+            let navVC = UINavigationController(rootViewController: movieDetailVC)
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.modalTransitionStyle = .flipHorizontal
+            self.present(navVC, animated: true)
+        }
     }
 
     func configurePopMovieCellForItem(

@@ -40,7 +40,8 @@ class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
             region: APIConstants.currentRegion,
             year: APIConstants.currentYear,
             query: query,
-            page: 1) { [weak self] result in
+            page: 1
+        ) { [weak self] result in
                 guard let self = self else { return }
 
                 switch result {
@@ -50,7 +51,11 @@ class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
                             self.filteredMoviesTableView.reloadData()
                         }
                     case .failure(let error):
-                        MyAlertManager.shared.showErrorAlert(error.localizedDescription, controller: self)
+                        MyAlertManager.shared.showErrorAlert(
+                            error.localizedDescription,
+                            controller: self,
+                            forTime: 2
+                        )
                 }
         }
     }

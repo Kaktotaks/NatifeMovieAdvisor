@@ -40,6 +40,7 @@ class MoviesListViewController: BaseViewController {
 
     private var currentSortingParametr = SortByParametr.popularity
 
+    // MARK: - UIView life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,6 +50,18 @@ class MoviesListViewController: BaseViewController {
         setUpSearchController()
         setUpRefreshControl()
         setupFilteredByButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        networkMonitor.startMonitoring()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        networkMonitor.stopMonitoring()
     }
 
     // MARK: - Methods
@@ -89,7 +102,11 @@ class MoviesListViewController: BaseViewController {
                     }
                 case .failure(let error):
                     ActivityIndicatorView.shared.hide()
-                    MyAlertManager.shared.showErrorAlert(error.localizedDescription, controller: self)
+                    MyAlertManager.shared.showErrorAlert(
+                        error.localizedDescription,
+                        controller: self,
+                        forTime: 2
+                    )
             }
         }
     }
@@ -296,11 +313,11 @@ extension MoviesListViewController {
             self.moviesTableView.reloadData()
         }
     }
-    
+
     // MARK: - Methods for adding UIMenu actions
     func addYearAction() -> [UIAction] {
         var result = [UIAction]()
-
+        
         for year in 2010...2022 {
             let action = UIAction(title: "\(year)") { _ in
                 APIConstants.currentYear = "\(year)"
@@ -319,7 +336,7 @@ extension MoviesListViewController {
     func addRegionAction() -> [UIAction] {
         let regions = ["us", "gb", "fr", "es", "no"]
         var result = [UIAction]()
-        
+
         for region in regions {
             let action = UIAction(title: "\(region)") { _ in
                 APIConstants.currentRegion = region
