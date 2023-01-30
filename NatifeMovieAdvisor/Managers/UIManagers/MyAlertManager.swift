@@ -77,13 +77,13 @@ struct MyAlertManager {
         return alertController
     }
 
-        // MARK: - Alert that shows different types of error (Bad network connection included)
-        func showErrorAlert(_ message: String, controller: UIViewController) {
+        // MARK: - Alert that shows different types of error
+    func showErrorAlert(_ message: String, controller: UIViewController, forTime: Double = 5) {
             let errorAlert = MyAlertManager.shared.presentTemporaryInfoAlert(
                 title: Constants.AlertAnswers.somethingWentWrongAnswear,
                 message: message,
                 preferredStyle: .actionSheet,
-                forTime: 8.0)
+                forTime: forTime)
             DispatchQueue.main.async {
                 controller.present(errorAlert, animated: true)
             }

@@ -29,6 +29,7 @@ enum APIConstants {
 }
 
 class RestService {
+    private let networkMonitor = NetworkMonitor.shared
     public var totalRezults = 0
 
     static let shared: RestService = .init()
@@ -90,6 +91,10 @@ class RestService {
             path = "\(path)&year=\(yearKey)"
         }
 
+        if networkMonitor.isConnected == false {
+            completionHandler(.failure(CustomError.noConnection))
+        }
+
         getJsonResponse(path, endPoint: endPoint) { [weak self] response in
             guard let self = self else { return }
 
@@ -100,6 +105,8 @@ class RestService {
                         let movies = data.results ?? []
                         completionHandler(.success(movies))
                         self.totalRezults = data.totalResults ?? 0
+                    } else {
+                        completionHandler(.failure(CustomError.noData))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))
@@ -127,6 +134,8 @@ class RestService {
                     if let data = try? decoder.decode(MovieDetailsModel.self, from: response.data ?? Data()) {
                         let movie = data
                         completionHandler(.success(movie))
+                    } else {
+                        completionHandler(.failure(CustomError.noData))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))
@@ -148,6 +157,8 @@ class RestService {
                     if let data = try? decoder.decode(MovieVideoEntryPointModel.self, from: response.data ?? Data()) {
                             let videos = data.results ?? []
                         completionHandler(.success(videos))
+                    } else {
+                        completionHandler(.failure(CustomError.noData))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))

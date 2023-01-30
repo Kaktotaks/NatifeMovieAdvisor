@@ -11,6 +11,8 @@ enum Constants {
     enum AlertAnswers {
         static var somethingWentWrongAnswear = "somethingWentWrong".localized()
         static var noDataByThisParametrs = "noDataByThisParametrs".localized()
+        static var noConnection = "noConnection".localized()
+        static var noConnectionShort = "noConnectionShort".localized()
     }
 
     enum Fonts {
@@ -36,7 +38,7 @@ enum Constants {
     }
 
     // MARK: - Another constants:
-    static let noData = "NoData".localized()
+    static let noData = "noData".localized()
     static let popularMoviesTitle = "popularMovies".localized()
     static let searchMoviesPlaceholder = "searchForMovies".localized()
     static let noImageURL = "https://us.123rf.com/450wm/koblizeek/koblizeek1902/koblizeek190200055/koblizeek190200055.jpg?ver=6"
