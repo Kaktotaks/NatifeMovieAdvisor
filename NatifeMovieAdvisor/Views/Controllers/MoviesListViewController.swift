@@ -25,6 +25,9 @@ class MoviesListViewController: BaseViewController {
     }
 
     private var moviesModel: [PopMoviesResponseModel] = []
+    private var currentSortingParametr = SortByParametr.popularity
+    private var filterByButton = UIBarButtonItem()
+    private var uiMenuManager = UIMenuManager.shared
 
     // MARK: - Setup UISearchController
     private let searchController = UISearchController(searchResultsController: SearchMoviesViewController())
@@ -37,8 +40,6 @@ class MoviesListViewController: BaseViewController {
     private var isFiltering: Bool {
         searchController.isActive && !isSearchBarEmpty
     }
-
-    private var currentSortingParametr = SortByParametr.popularity
 
     // MARK: - UIView life cycle
     override func viewDidLoad() {
@@ -163,52 +164,58 @@ class MoviesListViewController: BaseViewController {
         definesPresentationContext = true
     }
 
-    private func setupFilteredByButton() {
-        let filterByMenu = UIMenu(
-            title: Constants.MenuTexts.filterByTitle,
-            children: [
-                UIMenu(
-                    title: Constants.MenuTexts.yearTitle,
-                    image: UIImage(systemName: Constants.MenuTexts.calendarImage),
-                    children: addYearAction()
-                ),
-                UIMenu(
-                    title: Constants.MenuTexts.regionTitle,
-                    image: UIImage(systemName: Constants.MenuTexts.flagImage),
-                    children: addRegionAction()
-                )
-            ]
+    private func setupFilteredByButton(
+        regionTitle: String? = nil,
+        yearTitle: String? = nil,
+        sortTitle: String? = nil
+    ) {
+        let yearMenu = UIMenu(
+            title: Constants.MenuTexts.yearTitle,
+            image: UIImage(systemName: Constants.MenuTexts.calendarImage),
+            children: addYearActions()
+        )
+
+        let regionMenu = UIMenu(
+            title: Constants.MenuTexts.regionTitle,
+            image: UIImage(systemName: Constants.MenuTexts.flagImage),
+            children: addRegionActions()
         )
 
         let sortByMenu = UIMenu(
             title: Constants.MenuTexts.sortByTitle,
+            options: .displayInline,
             children: [
-                UIAction(
-                    title: Constants.MenuTexts.voteAvaraggeTitle,
-                    image: UIImage(systemName: Constants.MenuTexts.starImage)
-                ) { _ in
-                    self.setSortedModelToTableView(parametr: .voteAvarage)
-                },
-                UIAction(
+                addSortingAction(
                     title: Constants.MenuTexts.popularityTitle,
-                    image: UIImage(systemName: Constants.MenuTexts.personsImage)
-                ) { _ in
-                    self.setSortedModelToTableView(parametr: .popularity)
-                }
+                    image: UIImage(systemName: Constants.MenuTexts.personsImage) ?? UIImage(),
+                    sortedParametr: .popularity
+                ),
+                addSortingAction(
+                    title: Constants.MenuTexts.voteAvaraggeTitle,
+                    image: UIImage(systemName: Constants.MenuTexts.starImage) ?? UIImage(),
+                    sortedParametr: .voteAvarage
+                )
             ]
         )
 
-        let menu = UIMenu(
-            title: Constants.MenuTexts.filterSortTitle,
-            children: [sortByMenu, filterByMenu]
+        let filterByMenu = UIMenu(
+            title: Constants.MenuTexts.filterByTitle,
+            options: .displayInline,
+            children: [yearMenu, regionMenu]
         )
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: nil,
+        uiMenuManager.checkIfValueNotNil(value: regionTitle, menu: regionMenu)
+        uiMenuManager.checkIfValueNotNil(value: yearTitle, menu: yearMenu)
+        uiMenuManager.checkIfValueNotNil(value: sortTitle, menu: sortByMenu)
+
+        let finalMenu = UIMenu(children: [sortByMenu, filterByMenu])
+
+        self.filterByButton = UIBarButtonItem(
             image: UIImage(systemName: Constants.MenuTexts.sliderImage),
-            primaryAction: nil,
-            menu: menu
+            menu: finalMenu
         )
+
+        navigationItem.rightBarButtonItem = filterByButton
     }
 }
 
@@ -291,7 +298,7 @@ extension MoviesListViewController {
     }
 }
 
-// MARK: - Setup sorting parametrs:
+// MARK: - Setup sorting/filtering parametrs:
 // swiftlint: disable all
 extension MoviesListViewController {
     enum SortByParametr {
@@ -315,11 +322,13 @@ extension MoviesListViewController {
     }
 
     // MARK: - Methods for adding UIMenu actions
-    func addYearAction() -> [UIAction] {
+    func addYearActions() -> [UIAction] {
         var result = [UIAction]()
-        
+
         for year in 2010...2022 {
-            let action = UIAction(title: "\(year)") { _ in
+            let action = UIAction(title: "\(year)") { [unowned self] action in
+                setupFilteredByButton(regionTitle: uiMenuManager.regionTitle, yearTitle: action.title, sortTitle: uiMenuManager.sortTitle)
+                uiMenuManager.yearTitle = action.title
                 APIConstants.currentYear = "\(year)"
                 APIConstants.currentPage = 1
                 self.moviesModel.removeAll()
@@ -333,12 +342,14 @@ extension MoviesListViewController {
         return result.reversed()
     }
 
-    func addRegionAction() -> [UIAction] {
+    func addRegionActions() -> [UIAction] {
         let regions = ["us", "gb", "fr", "es", "no"]
         var result = [UIAction]()
 
         for region in regions {
-            let action = UIAction(title: "\(region)") { _ in
+            let action = UIAction(title: "\(region)") { [unowned self] action in
+                setupFilteredByButton(regionTitle: action.title, yearTitle: uiMenuManager.yearTitle, sortTitle: uiMenuManager.sortTitle)
+                uiMenuManager.regionTitle = action.title
                 APIConstants.currentRegion = region
                 APIConstants.currentPage = 1
                 self.moviesModel.removeAll()
@@ -350,5 +361,18 @@ extension MoviesListViewController {
             result.append(action)
         }
         return result
+    }
+    
+    func addSortingAction(title: String, image: UIImage, sortedParametr: SortByParametr) -> UIAction {
+        let action = UIAction(
+            title: title,
+            image: image
+        ) { [unowned self] action in
+            self.setSortedModelToTableView(parametr: sortedParametr)
+            setupFilteredByButton(regionTitle: uiMenuManager.regionTitle, yearTitle: uiMenuManager.yearTitle, sortTitle: action.title)
+            uiMenuManager.sortTitle = action.title
+        }
+
+        return action
     }
 }
