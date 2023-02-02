@@ -22,7 +22,6 @@ enum Constants {
     }
 
     enum MenuTexts {
-        static let filterSortTitle = "filterSortTitle".localized()
         static let filterByTitle = "filterByTitle".localized()
         static let sortByTitle = "sortByTitle".localized()
         static let yearTitle = "yearTitle".localized()
