@@ -31,7 +31,6 @@
 "Western" = "Вестерни";
 
 // MARK: - UIMenu text
-"filterSortTitle" = "Фільтр/Сортування списку фільмів";
 "filterByTitle" = "Фільтрувати за:";
 "sortByTitle" = "Сортувати за:";
 "yearTitle" = "Рік";
