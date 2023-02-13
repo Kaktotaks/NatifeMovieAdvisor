@@ -78,4 +78,8 @@ extension SearchMoviesViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presentMovieDetailVC(models: filteredMovies, indexPath: indexPath)
     }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        tableViewCellApearingAnimation(tableView, willDisplay: cell, forRowAt: indexPath)
+    }
 }

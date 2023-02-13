@@ -232,6 +232,8 @@ extension MoviesListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard !self.moviesModel.isEmpty else { return }
 
+        tableViewCellApearingAnimation(tableView, willDisplay: cell, forRowAt: indexPath)
+
         let totalRezults = RestService.shared.totalRezults
 
         if indexPath.row == moviesModel.count - 1 && totalRezults > moviesModel.count {
