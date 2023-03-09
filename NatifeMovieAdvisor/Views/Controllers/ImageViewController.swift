@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
+final class ImageViewController: UIViewController {
     // MARK: - Constants and Variables
     private lazy var movieImage: UIImageView = build {
         $0.contentMode = .scaleAspectFit

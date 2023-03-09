@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import YouTubeiOSPlayerHelper
 
-class MovieDetailsViewController: UIViewController {
+final class MovieDetailsViewController: UIViewController {
     // MARK: - Constants and Variables
     private lazy var scrollView: UIScrollView = build {
         $0.backgroundColor = .clear

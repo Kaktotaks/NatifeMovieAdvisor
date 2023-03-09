@@ -9,7 +9,7 @@ import UIKit
 import Lottie
 import SnapKit
 
-class ActivityIndicatorView: UIView {
+final class ActivityIndicatorView: UIView {
     static var shared = ActivityIndicatorView()
 
     private let loadingAnimationView = LottieAnimationView()
