@@ -28,7 +28,7 @@ enum APIConstants {
     static var currentPage = 1
 }
 
-class RestService {
+final class RestService {
     private let networkMonitor = NetworkMonitor.shared
     public var totalRezults = 0
 

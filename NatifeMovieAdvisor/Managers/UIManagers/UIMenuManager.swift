@@ -7,8 +7,8 @@
 
 import UIKit
 
-struct UIMenuManager {
-    static let shared = UIMenuManager()
+final class UIMenuManager {
+    static let shared: UIMenuManager = .init()
 
     private init() { }
 

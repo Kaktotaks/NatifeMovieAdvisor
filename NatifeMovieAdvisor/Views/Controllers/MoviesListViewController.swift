@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MoviesListViewController: BaseViewController {
+final class MoviesListViewController: BaseViewController {
     // MARK: - Constants & Variables
     private lazy var moviesTableView: UITableView = build {
         $0.separatorStyle = .none

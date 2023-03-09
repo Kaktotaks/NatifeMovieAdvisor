@@ -9,7 +9,9 @@ import Foundation
 import Reachability
 
 final class NetworkMonitor {
-    static let shared = NetworkMonitor()
+    static let shared: NetworkMonitor = .init()
+
+    private init() {}
 
     private let reachability = try? Reachability()
     private(set) var isConnected: Bool = true
