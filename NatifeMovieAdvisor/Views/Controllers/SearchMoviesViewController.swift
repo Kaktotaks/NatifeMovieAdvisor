@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
+final class SearchMoviesViewController: BaseViewController, UISearchResultsUpdating {
     // MARK: - Constants and Variables
     private let filteredMoviesTableView: UITableView = build {
         $0.translatesAutoresizingMaskIntoConstraints = false
