@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E416F78229C36377009C51CB /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416F78129C36377009C51CB /* UIViewExtension.swift */; };
 		E4442D21297EC40800BB756E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4442D20297EC40800BB756E /* CustomError.swift */; };
 		E4442D23297F06B600BB756E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4442D22297F06B600BB756E /* NetworkMonitor.swift */; };
 		E4442D26297F0CCA00BB756E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E4442D25297F0CCA00BB756E /* Lottie */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E416F78129C36377009C51CB /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		E4442D20297EC40800BB756E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		E4442D22297F06B600BB756E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		E482830E296D92E300FE76CD /* NatifeMovieAdvisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NatifeMovieAdvisor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +282,7 @@
 				E48283632971790C00FE76CD /* SequenceExtension.swift */,
 				E4828357296EF41E00FE76CD /* StringExtension.swift */,
 				E4F263CB2978344A0084A928 /* ArrayExtension.swift */,
+				E416F78129C36377009C51CB /* UIViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				E4F263AF2975688F0084A928 /* ProductionCountriesModel.swift in Sources */,
 				E4828316296D92E300FE76CD /* MoviesListViewController.swift in Sources */,
 				E4F263B22975688F0084A928 /* SpokenLanguagesModel.swift in Sources */,
+				E416F78229C36377009C51CB /* UIViewExtension.swift in Sources */,
 				E482835E29707ABE00FE76CD /* LoaderFooterView.swift in Sources */,
 				E4828337296DA38000FE76CD /* RestService.swift in Sources */,
 				E4F263B02975688F0084A928 /* MovieDetailsModel.swift in Sources */,
