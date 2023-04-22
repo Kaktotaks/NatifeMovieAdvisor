@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct LoaderFooterView {
+final class LoaderFooterView {
     static let shared = LoaderFooterView()
     private init() {}
 

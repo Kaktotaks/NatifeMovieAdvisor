@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import YouTubeiOSPlayerHelper
 
-final class MovieDetailsViewController: UIViewController {
+final class MovieDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Constants and Variables
     private lazy var scrollView: UIScrollView = build {
         $0.backgroundColor = .clear
@@ -81,6 +81,10 @@ final class MovieDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Aneble gesture to swipe back ViewControllers
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         configureNavigationBarItems()
         getMovieDetail()
@@ -162,7 +166,7 @@ final class MovieDetailsViewController: UIViewController {
     }
 
     @objc private func didTapBackButton() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     private func addGesture() {

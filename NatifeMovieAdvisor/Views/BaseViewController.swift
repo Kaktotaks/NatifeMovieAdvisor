@@ -30,11 +30,7 @@ class BaseViewController: UIViewController {
         } else {
             let movieID = models[indexPath.row].id
             let movieDetailVC = MovieDetailsViewController(movieID: movieID)
-
-            let navVC = UINavigationController(rootViewController: movieDetailVC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.modalTransitionStyle = .flipHorizontal
-            self.present(navVC, animated: true)
+            navigationController?.pushViewController(movieDetailVC, animated: true)
         }
     }
 

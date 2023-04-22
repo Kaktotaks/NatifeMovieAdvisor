@@ -109,6 +109,7 @@ final class MovieTableViewCell: UITableViewCell {
 // MARK: - UI setup.
 extension MovieTableViewCell {
     private func setupSubviews() {
+        contentView.makeShadow()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         contentView.addSubview(posterImageView)
         posterImageView.addSubview(gradientView)
